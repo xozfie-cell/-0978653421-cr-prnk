@@ -5,8 +5,23 @@ const terminal = document.getElementById("terminal");
 const bar = document.getElementById("bar");
 const ip = document.getElementById("ip");
 
-document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("keydown", e => e.preventDefault());
+tap.addEventListener("click", () => {
+  document.documentElement.requestFullscreen?.();
+  tap.classList.add("hidden");
+  systemPopup.classList.remove("hidden");
+}, { once: true });
+
+document.getElementById("popupBtn").addEventListener("click", () => {
+  systemPopup.classList.add("hidden");
+  screen.classList.remove("hidden");
+
+  // BARU LOCK INPUT DI SINI
+  document.addEventListener("keydown", e => e.preventDefault());
+  document.addEventListener("contextmenu", e => e.preventDefault());
+
+  startPrank();
+});
+
 history.pushState(null,"",location.href);
 window.onpopstate = () => history.pushState(null,"",location.href);
 
@@ -17,7 +32,6 @@ tap.addEventListener("click", () => {
   // tampilkan popup dulu
   document.getElementById("systemPopup").classList.remove("hidden");
 }, { once: true });
-
 
 document.getElementById("popupBtn").addEventListener("click", () => {
   document.getElementById("systemPopup").classList.add("hidden");
