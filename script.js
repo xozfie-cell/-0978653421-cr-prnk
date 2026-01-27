@@ -13,8 +13,11 @@ window.onpopstate = () => history.pushState(null,"",location.href);
 tap.addEventListener("click", () => {
   document.documentElement.requestFullscreen?.();
   tap.classList.add("hidden");
+
+  // tampilkan popup dulu
   document.getElementById("systemPopup").classList.remove("hidden");
-}, { once:true });
+}, { once: true });
+
 
 document.getElementById("popupBtn").addEventListener("click", () => {
   document.getElementById("systemPopup").classList.add("hidden");
@@ -57,3 +60,13 @@ function endPrank(){
 }
 
 function rand(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("popupBtn");
+
+  btn.addEventListener("click", () => {
+    document.getElementById("systemPopup").classList.add("hidden");
+    screen.classList.remove("hidden");
+    startPrank();
+  });
+});
