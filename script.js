@@ -13,9 +13,15 @@ window.onpopstate = () => history.pushState(null,"",location.href);
 tap.addEventListener("click", () => {
   document.documentElement.requestFullscreen?.();
   tap.classList.add("hidden");
+  document.getElementById("systemPopup").classList.remove("hidden");
+}, { once:true });
+
+document.getElementById("popupBtn").addEventListener("click", () => {
+  document.getElementById("systemPopup").classList.add("hidden");
   screen.classList.remove("hidden");
   startPrank();
-}, { once:true });
+});
+
 
 ip.textContent = `IP: 192.168.${rand(10,99)}.${rand(10,99)}`;
 
