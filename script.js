@@ -1,311 +1,436 @@
-// Load JSON data
-let messages = {};
-let texts = {};
+// Malware Prank Simulation - Safe and Harmless
+// Duration: 10 seconds
 
-// Try to load from JSON file
-fetch('data.json')
-    .then(response => response.json())
-    .then(data => {
-        texts = data;
-        initializePrank();
-    })
-    .catch(error => {
-        console.log("Using default messages. JSON not loaded:", error);
-        // Default messages if JSON fails to load
-        texts = {
-            glitchTexts: [
-                "SYSTEM BREACH DETECTED",
-                "DATA EXFILTRATION IN PROGRESS",
-                "CRITICAL THREAT LEVEL",
-                "SECURITY PROTOCOLS FAILED",
-                "EMERGENCY LOCKDOWN ACTIVE"
-            ],
-            terminalLines: [
-                "Analyzing memory usage... <span class='percentage'>87%</span>",
-                "Checking firewall status... <span class='error'>BYPASSED</span>",
-                "Detecting intrusion vector... <span class='warning'>PHISHING ATTACK</span>",
-                "Scanning for keyloggers... <span class='error'>3 DETECTED</span>",
-                "Verifying system integrity... <span class='error'>FAILED</span>",
-                "Checking for data breaches... <span class='warning'>MULTIPLE DETECTED</span>",
-                "Attempting to restore backup... <span class='error'>BACKUP CORRUPTED</span>",
-                "Sending distress signal... <span class='warning'>NO RESPONSE</span>"
-            ],
-            fileItems: [
-                "passwords.txt - ACCESSED",
-                "bank_details.xlsx - ENCRYPTING",
-                "personal_photos/ - SCANNING",
-                "tax_return_2023.pdf - UPLOADING",
-                "emails_backup.db - EXFILTRATING",
-                "browser_history.log - ANALYZING",
-                "system_backup.zip - CORRUPTED",
-                "encryption_keys.dat - STOLEN"
-            ],
-            systemPopup: {
-                title: "SYSTEM ALERT",
-                message: "The system has detected unusual activity. If this is not you, secure your device immediately!",
-                threatLevel: "CRITICAL",
-                buttonText: "Next",
-                lockMessage: "System lockdown active - 8 seconds remaining"
-            },
-            prankMessage: {
-                title: "You've been pranked! 👊",
-                message1: "This was a simulated malware attack. No files were accessed, modified, or stolen.",
-                message2: "Your device is completely safe. This was just a harmless prank to remind you about cybersecurity awareness.",
-                buttonText: "Close Simulation",
-                tip: "Remember to always keep your antivirus updated and be cautious of suspicious links!"
+document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const systemPopup = document.getElementById('system-popup');
+    const prankMessage = document.getElementById('prank-message');
+    const nextButton = document.getElementById('next-button');
+    const closeButton = document.getElementById('close-button');
+    const replayButton = document.getElementById('replay-button');
+    const countdownElement = document.getElementById('countdown');
+    const warningSymbol = document.getElementById('warning-symbol');
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
+    const blockScreen = document.getElementById('block-screen');
+    const glitchText = document.getElementById('glitch-text');
+    const terminal = document.querySelector('.terminal');
+    const lockdownTimer = document.getElementById('lockdown-timer');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    
+    // Initialize variables
+    let countdown = 10;
+    let timerInterval;
+    let audioContext;
+    let oscillators = [];
+    let isFullscreen = false;
+    
+    // Fullscreen function
+    function toggleFullscreen() {
+        if (!isFullscreen) {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
             }
-        };
-        initializePrank();
-    });
-
-// Main initialization function
-function initializePrank() {
-    document.addEventListener('DOMContentLoaded', function() {
-        // Elements
-        const systemPopup = document.getElementById('system-popup');
-        const prankMessage = document.getElementById('prank-message');
-        const nextButton = document.getElementById('next-button');
-        const closeButton = document.getElementById('close-button');
-        const countdownElement = document.getElementById('countdown');
-        const warningSymbol = document.getElementById('warning-symbol');
-        const progressContainer = document.getElementById('progress-container');
-        const progressBar = document.getElementById('progress-bar');
-        const blockScreen = document.getElementById('block-screen');
-        const glitchText = document.getElementById('glitch-text');
-        const terminal = document.querySelector('.terminal');
-        const filesList = document.querySelector('.files-list');
-        
-        // Initialize variables
-        let countdown = 8;
-        let timerInterval;
-        let audioContext;
-        let oscillators = [];
-        
-        // Update UI with JSON data
-        if (texts.systemPopup) {
-            document.querySelector('#system-popup h2').textContent = texts.systemPopup.title;
-            document.querySelector('#system-popup p').textContent = texts.systemPopup.message;
-            document.querySelector('#system-popup strong').textContent = `Threat Level: ${texts.systemPopup.threatLevel}`;
-            nextButton.textContent = texts.systemPopup.buttonText;
-            document.querySelector('#system-popup p:nth-child(4)').textContent = texts.systemPopup.lockMessage;
+            isFullscreen = true;
+            fullscreenBtn.textContent = "🗗 Exit Fullscreen";
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            isFullscreen = false;
+            fullscreenBtn.textContent = "⛶ Fullscreen";
         }
+    }
+    
+    // Start the prank simulation
+    function startPrank() {
+        console.log("Starting harmless prank simulation...");
         
-        if (texts.prankMessage) {
-            document.querySelector('#prank-message h2').textContent = texts.prankMessage.title;
-            document.querySelectorAll('#prank-message p')[0].textContent = texts.prankMessage.message1;
-            document.querySelectorAll('#prank-message p')[1].textContent = texts.prankMessage.message2;
-            closeButton.textContent = texts.prankMessage.buttonText;
-            document.querySelectorAll('#prank-message p')[2].textContent = texts.prankMessage.tip;
-        }
+        // Try to enter fullscreen automatically
+        setTimeout(() => {
+            if (!isFullscreen) {
+                toggleFullscreen();
+            }
+        }, 500);
         
-        // Update file items
-        if (texts.fileItems && filesList) {
-            filesList.innerHTML = '';
-            texts.fileItems.forEach(item => {
-                const fileElement = document.createElement('div');
-                fileElement.className = 'file-item';
-                fileElement.textContent = item;
-                filesList.appendChild(fileElement);
-            });
-        }
+        // Show fullscreen button
+        fullscreenBtn.style.display = 'block';
         
-        // Start the prank simulation
-        function startPrank() {
-            // Prevent touch/click interaction for 8 seconds
-            blockScreen.style.display = 'block';
-            
-            // Show countdown
-            countdownElement.style.display = 'block';
+        // Prevent touch/click interaction for 10 seconds
+        blockScreen.style.display = 'block';
+        
+        // Show countdown
+        countdownElement.style.display = 'block';
+        countdownElement.textContent = countdown;
+        
+        // Show warning symbol
+        warningSymbol.style.display = 'block';
+        
+        // Show progress bar
+        progressContainer.style.display = 'block';
+        
+        // Start the keygen sound
+        startKeygenSound();
+        
+        // Add more terminal lines dynamically
+        addTerminalLines();
+        
+        // Start the countdown
+        timerInterval = setInterval(function() {
+            countdown--;
             countdownElement.textContent = countdown;
+            lockdownTimer.textContent = countdown;
             
-            // Show warning symbol
-            warningSymbol.style.display = 'block';
+            // Update progress bar
+            const progress = 100 - (countdown / 10 * 100);
+            progressBar.style.width = progress + '%';
             
-            // Show progress bar
-            progressContainer.style.display = 'block';
-            
-            // Start the keygen sound
-            startKeygenSound();
-            
-            // Add more terminal lines dynamically
-            addTerminalLines();
-            
-            // Start the countdown
-            timerInterval = setInterval(function() {
-                countdown--;
-                countdownElement.textContent = countdown;
-                
-                // Update progress bar
-                const progress = 100 - (countdown / 8 * 100);
-                progressBar.style.width = progress + '%';
-                
-                // Change glitch text occasionally
-                if (countdown % 2 === 0 && texts.glitchTexts) {
-                    const randomIndex = Math.floor(Math.random() * texts.glitchTexts.length);
-                    glitchText.textContent = texts.glitchTexts[randomIndex];
-                }
-                
-                // Show system popup after 2 seconds
-                if (countdown === 6) {
-                    systemPopup.style.display = 'block';
-                }
-                
-                // Enable the Next button after 8 seconds
-                if (countdown === 0) {
-                    clearInterval(timerInterval);
-                    endPrank();
-                }
-            }, 1000);
-        }
-        
-        // End the prank after 8 seconds
-        function endPrank() {
-            // Stop the keygen sound
-            stopKeygenSound();
-            
-            // Hide system popup and show prank message
-            systemPopup.style.display = 'none';
-            prankMessage.style.display = 'block';
-            
-            // Remove block screen to allow interaction
-            blockScreen.style.display = 'none';
-            
-            // Hide warning symbol and countdown
-            warningSymbol.style.display = 'none';
-            countdownElement.style.display = 'none';
-            progressContainer.style.display = 'none';
-            
-            // Add final terminal line
-            const finalLine = document.createElement('div');
-            finalLine.className = 'terminal-line';
-            finalLine.textContent = "Security breach simulation complete. System secure.";
-            terminal.appendChild(finalLine);
-        }
-        
-        // Generate keygen-like sound using Web Audio API
-        function startKeygenSound() {
-            try {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Create multiple oscillators for complex sound
-                for (let i = 0; i < 3; i++) {
-                    setTimeout(() => {
-                        const osc = audioContext.createOscillator();
-                        const gain = audioContext.createGain();
-                        
-                        osc.connect(gain);
-                        gain.connect(audioContext.destination);
-                        
-                        // Random frequency for keygen-like sound
-                        osc.frequency.value = 100 + Math.random() * 800;
-                        
-                        // Random gain (volume)
-                        gain.gain.value = 0.1 + Math.random() * 0.1;
-                        
-                        // Random waveform
-                        const waveforms = ['sine', 'square', 'sawtooth', 'triangle'];
-                        osc.type = waveforms[Math.floor(Math.random() * waveforms.length)];
-                        
-                        osc.start();
-                        
-                        // Store oscillator for later cleanup
-                        oscillators.push({osc, gain});
-                        
-                        // Change frequency randomly for effect
-                        const intervalId = setInterval(() => {
-                            osc.frequency.value = 100 + Math.random() * 800;
-                        }, 100 + Math.random() * 200);
-                        
-                        // Store interval ID for cleanup
-                        osc._intervalId = intervalId;
-                        
-                    }, i * 300);
-                }
-            } catch (e) {
-                console.log("Audio could not be initialized: ", e);
+            // Change glitch text occasionally
+            if (countdown % 2 === 0) {
+                const texts = [
+                    "SYSTEM BREACH DETECTED",
+                    "DATA EXFILTRATION IN PROGRESS",
+                    "CRITICAL THREAT LEVEL",
+                    "SECURITY PROTOCOLS FAILED",
+                    "EMERGENCY LOCKDOWN ACTIVE",
+                    "UNAUTHORIZED ACCESS BLOCKED",
+                    "MALWARE SIGNATURE DETECTED",
+                    "SYSTEM INTEGRITY COMPROMISED"
+                ];
+                glitchText.textContent = texts[Math.floor(Math.random() * texts.length)];
             }
-        }
+            
+            // Show system popup after 3 seconds
+            if (countdown === 7) {
+                systemPopup.style.display = 'block';
+            }
+            
+            // Enable the Next button after 10 seconds
+            if (countdown === 0) {
+                clearInterval(timerInterval);
+                nextButton.disabled = false;
+                nextButton.textContent = "Next →";
+                endPrank();
+            }
+        }, 1000);
+    }
+    
+    // End the prank after 10 seconds
+    function endPrank() {
+        console.log("Ending prank simulation...");
         
         // Stop the keygen sound
-        function stopKeygenSound() {
-            if (audioContext) {
-                // Gradually reduce volume for all oscillators
-                oscillators.forEach(({osc, gain}) => {
-                    if (gain) {
-                        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
-                    }
-                    if (osc._intervalId) {
-                        clearInterval(osc._intervalId);
+        stopKeygenSound();
+        
+        // Hide system popup and show prank message
+        systemPopup.style.display = 'none';
+        prankMessage.style.display = 'block';
+        
+        // Remove block screen to allow interaction
+        blockScreen.style.display = 'none';
+        
+        // Hide warning symbol and countdown
+        warningSymbol.style.display = 'none';
+        countdownElement.style.display = 'none';
+        progressContainer.style.display = 'none';
+        
+        // Add final terminal line
+        const finalLine = document.createElement('div');
+        finalLine.className = 'terminal-line';
+        finalLine.innerHTML = "<span style='color:#0f0'>System restore complete. Threat neutralized. Device secure.</span>";
+        terminal.appendChild(finalLine);
+        
+        // Scroll terminal to bottom
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+    
+    // Generate keygen-like sound using Web Audio API
+    function startKeygenSound() {
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Create multiple oscillators for complex sound
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Random frequency for keygen-like sound
+                    const baseFreq = 80 + (i * 120);
+                    oscillator.frequency.value = baseFreq;
+                    
+                    // Random gain (volume)
+                    gainNode.gain.value = 0.05 + (Math.random() * 0.05);
+                    
+                    // Random waveform
+                    const waveforms = ['sine', 'square', 'sawtooth', 'triangle'];
+                    oscillator.type = waveforms[i % waveforms.length];
+                    
+                    oscillator.start();
+                    oscillators.push({osc: oscillator, gain: gainNode});
+                    
+                    // Change frequency randomly for effect
+                    setInterval(() => {
+                        if (oscillator.frequency) {
+                            const randomChange = (Math.random() - 0.5) * 200;
+                            oscillator.frequency.value = baseFreq + randomChange;
+                        }
+                    }, 150 + Math.random() * 300);
+                    
+                    // Random volume changes
+                    setInterval(() => {
+                        if (gainNode.gain) {
+                            gainNode.gain.value = 0.03 + (Math.random() * 0.07);
+                        }
+                    }, 200 + Math.random() * 400);
+                    
+                }, i * 250);
+            }
+            
+            // Add noise for more realistic effect
+            setTimeout(() => {
+                const bufferSize = 4096;
+                const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                
+                for (let i = 0; i < bufferSize; i++) {
+                    output[i] = Math.random() * 2 - 1;
+                }
+                
+                const whiteNoise = audioContext.createBufferSource();
+                whiteNoise.buffer = noiseBuffer;
+                whiteNoise.loop = true;
+                
+                const noiseGain = audioContext.createGain();
+                noiseGain.gain.value = 0.02;
+                
+                whiteNoise.connect(noiseGain);
+                noiseGain.connect(audioContext.destination);
+                whiteNoise.start();
+                
+                oscillators.push({osc: whiteNoise, gain: noiseGain});
+            }, 1000);
+            
+        } catch (e) {
+            console.log("Audio could not be initialized: ", e);
+        }
+    }
+    
+    // Stop the keygen sound
+    function stopKeygenSound() {
+        if (audioContext) {
+            // Gradually reduce volume for all oscillators
+            oscillators.forEach(item => {
+                if (item.gain) {
+                    item.gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 1.0);
+                }
+            });
+            
+            // Stop all oscillators after fadeout
+            setTimeout(() => {
+                oscillators.forEach(item => {
+                    if (item.osc && typeof item.osc.stop === 'function') {
+                        try {
+                            item.osc.stop();
+                        } catch(e) {
+                            console.log("Error stopping oscillator:", e);
+                        }
                     }
                 });
                 
-                // Stop oscillators after fadeout
-                setTimeout(() => {
-                    oscillators.forEach(({osc}) => {
-                        try {
-                            osc.stop();
-                        } catch (e) {
-                            // Oscillator already stopped
-                        }
-                    });
-                    
-                    if (audioContext.state !== 'closed') {
-                        audioContext.close();
-                    }
-                }, 500);
+                oscillators = [];
+                
+                if (audioContext.state !== 'closed') {
+                    audioContext.close().catch(e => console.log("Error closing audio context:", e));
+                }
+            }, 1000);
+        }
+    }
+    
+    // Add dynamic terminal lines
+    function addTerminalLines() {
+        const terminalLines = [
+            "Analyzing memory usage... <span class='percentage'>92%</span>",
+            "Checking firewall status... <span class='error'>COMPROMISED</span>",
+            "Detecting intrusion vector... <span class='warning'>PHISHING ATTACK</span>",
+            "Scanning for keyloggers... <span class='error'>4 DETECTED</span>",
+            "Verifying system integrity... <span class='error'>CHECKSUM FAILED</span>",
+            "Checking for data breaches... <span class='warning'>CREDENTIALS LEAKED</span>",
+            "Attempting to restore backup... <span class='error'>BACKUP CORRUPTED</span>",
+            "Sending distress signal... <span class='warning'>SIGNAL JAMMED</span>",
+            "Isolating infected sectors... <span class='percentage'>45%</span>",
+            "Scanning registry entries... <span class='error'>MALICIOUS ENTRIES FOUND</span>"
+        ];
+        
+        let lineIndex = 0;
+        const lineInterval = setInterval(() => {
+            if (lineIndex < terminalLines.length) {
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+                line.innerHTML = terminalLines[lineIndex];
+                terminal.appendChild(line);
+                
+                // Scroll terminal to bottom
+                terminal.scrollTop = terminal.scrollHeight;
+                
+                lineIndex++;
+            } else {
+                clearInterval(lineInterval);
+            }
+        }, 800);
+    }
+    
+    // Reset the prank for replay
+    function resetPrank() {
+        // Reset variables
+        countdown = 10;
+        
+        // Hide popups
+        systemPopup.style.display = 'none';
+        prankMessage.style.display = 'none';
+        
+        // Clear terminal lines (keep the first 15 original ones)
+        const terminalLines = terminal.querySelectorAll('.terminal-line');
+        for (let i = 15; i < terminalLines.length; i++) {
+            if (terminalLines[i]) {
+                terminalLines[i].remove();
             }
         }
         
-        // Add dynamic terminal lines
-        function addTerminalLines() {
-            if (!texts.terminalLines) return;
-            
-            let lineIndex = 0;
-            const lineInterval = setInterval(() => {
-                if (lineIndex < texts.terminalLines.length) {
-                    const line = document.createElement('div');
-                    line.className = 'terminal-line';
-                    line.innerHTML = texts.terminalLines[lineIndex];
-                    terminal.appendChild(line);
-                    
-                    // Scroll terminal to bottom
-                    terminal.scrollTop = terminal.scrollHeight;
-                    
-                    lineIndex++;
-                } else {
-                    clearInterval(lineInterval);
-                }
-            }, 600);
+        // Reset progress bar
+        progressBar.style.width = '0%';
+        
+        // Reset countdown display
+        countdownElement.textContent = countdown;
+        lockdownTimer.textContent = countdown;
+        
+        // Re-enable block screen
+        blockScreen.style.display = 'block';
+        
+        // Show warning symbol and countdown
+        warningSymbol.style.display = 'block';
+        countdownElement.style.display = 'block';
+        progressContainer.style.display = 'block';
+        
+        // Reset next button
+        nextButton.disabled = true;
+        nextButton.textContent = "Next";
+        
+        // Restart the prank
+        startPrank();
+    }
+    
+    // Event listeners
+    nextButton.addEventListener('click', function() {
+        if (!nextButton.disabled) {
+            systemPopup.style.display = 'none';
         }
-        
-        // Event listeners
-        nextButton.addEventListener('click', function() {
-            // This button is disabled for 8 seconds, so this shouldn't fire
-            // until after the prank ends, but just in case:
-            if (countdown > 0) {
-                return;
-            }
-        });
-        
-        closeButton.addEventListener('click', function() {
-            // Reload the page to reset the simulation
-            location.reload();
-        });
-        
-        // Start the prank after a short delay
-        setTimeout(startPrank, 1000);
-        
-        // Add random visual effects during the simulation
-        setInterval(() => {
-            if (countdown > 0) {
-                // Random flashes
-                if (Math.random() > 0.7) {
-                    document.body.style.backgroundColor = '#100';
-                    setTimeout(() => {
-                        document.body.style.backgroundColor = '#000';
-                    }, 100);
-                }
-            }
-        }, 300);
     });
-}
+    
+    closeButton.addEventListener('click', function() {
+        // Exit fullscreen if active
+        if (isFullscreen) {
+            toggleFullscreen();
+        }
+        
+        // Show a goodbye message and reload after a short delay
+        prankMessage.innerHTML = `
+            <h2>😊 Stay Safe Online!</h2>
+            <p>This simulation has ended. Remember to always:</p>
+            <ul style="text-align: left; margin: 20px 0; color: #ccc;">
+                <li>Use strong, unique passwords</li>
+                <li>Keep your software updated</li>
+                <li>Be cautious of suspicious links/emails</li>
+                <li>Use antivirus software</li>
+                <li>Enable two-factor authentication</li>
+            </ul>
+            <p>Closing in <span id="close-timer">3</span> seconds...</p>
+        `;
+        
+        let closeTimer = 3;
+        const closeCountdown = setInterval(() => {
+            closeTimer--;
+            document.getElementById('close-timer').textContent = closeTimer;
+            
+            if (closeTimer <= 0) {
+                clearInterval(closeCountdown);
+                window.location.href = "about:blank";
+            }
+        }, 1000);
+    });
+    
+    replayButton.addEventListener('click', function() {
+        resetPrank();
+    });
+    
+    fullscreenBtn.addEventListener('click', function() {
+        toggleFullscreen();
+    });
+    
+    // Handle fullscreen change events
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
+    
+    function handleFullscreenChange() {
+        isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+        fullscreenBtn.textContent = isFullscreen ? "🗗 Exit Fullscreen" : "⛶ Fullscreen";
+    }
+    
+    // Add random visual effects during the simulation
+    setInterval(() => {
+        if (countdown > 0) {
+            // Random flashes
+            if (Math.random() > 0.8) {
+                document.body.style.backgroundColor = '#200';
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '#000';
+                }, 100);
+            }
+            
+            // Random file items
+            if (Math.random() > 0.9) {
+                const fileItems = document.querySelectorAll('.file-item');
+                if (fileItems.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * fileItems.length);
+                    fileItems[randomIndex].style.color = '#ff4444';
+                    setTimeout(() => {
+                        fileItems[randomIndex].style.color = '';
+                    }, 500);
+                }
+            }
+        }
+    }, 300);
+    
+    // Start the prank after a short delay
+    setTimeout(startPrank, 800);
+    
+    // Prevent context menu
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // Prevent keyboard shortcuts (F12, Ctrl+Shift+I, etc.)
+    document.addEventListener('keydown', function(e) {
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        if (e.key === 'F12' || 
+           (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+           (e.ctrlKey && e.key === 'u')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+});
