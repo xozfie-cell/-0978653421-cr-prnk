@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Security Alert</title>
+    <title>System Security</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚠️</text></svg>">
 </head>
@@ -58,39 +58,44 @@
     <div class="overlay"></div>
     
     <!-- Countdown -->
-    <div class="countdown" id="countdown">8</div>
+    <div class="countdown" id="countdown">10</div>
     
     <!-- Progress bar -->
     <div class="progress-container" id="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
     </div>
     
-    <!-- System popup (appears after 2 seconds) -->
+    <!-- System popup (appears after 3 seconds) -->
     <div class="popup" id="system-popup">
-        <h2>SYSTEM ALERT</h2>
+        <h2>⚠️ SYSTEM ALERT ⚠️</h2>
         <p>The system has detected unusual activity. If this is not you, secure your device immediately!</p>
-        <p><strong>Threat Level: CRITICAL</strong></p>
+        <p><strong style="color: #ff4444;">Threat Level: CRITICAL</strong></p>
+        <p><small>Intrusion attempt detected from external source</small></p>
         <button id="next-button" disabled>Next</button>
-        <p style="font-size: 14px; margin-top: 15px; color: #ccc;">System lockdown active - 8 seconds remaining</p>
+        <p style="font-size: 12px; margin-top: 15px; color: #aaa;">System lockdown active - <span id="lockdown-timer">10</span> seconds remaining</p>
     </div>
     
-    <!-- Prank message (appears after 8 seconds) -->
+    <!-- Prank message (appears after 10 seconds) -->
     <div class="prank-message" id="prank-message">
-        <h2>You've been pranked! 👊</h2>
-        <p>This was a simulated malware attack. No files were accessed, modified, or stolen.</p>
-        <p>Your device is completely safe. This was just a harmless prank to remind you about cybersecurity awareness.</p>
-        <button id="close-button">Close Simulation</button>
-        <p style="font-size: 14px; margin-top: 20px; color: #0a0;">Remember to always keep your antivirus updated and be cautious of suspicious links!</p>
+        <h2>😄 You've been pranked! 👊</h2>
+        <p><strong>This was a simulated malware attack!</strong></p>
+        <p>No files were accessed, modified, or stolen. Your device is completely safe.</p>
+        <p>This was just a harmless prank to remind you about cybersecurity awareness.</p>
+        <div class="prank-footer">
+            <button id="close-button">Close Simulation</button>
+            <button id="replay-button">Watch Again</button>
+        </div>
+        <p style="font-size: 13px; margin-top: 20px; color: #0a0;">Remember to always keep your antivirus updated and be cautious of suspicious links!</p>
     </div>
     
     <!-- Block screen to prevent interaction -->
     <div class="block-screen" id="block-screen"></div>
     
-    <!-- Audio element for keygen sound -->
-    <audio id="keygen-audio" loop></audio>
+    <!-- Fullscreen toggle -->
+    <button id="fullscreen-btn" class="fullscreen-btn">⛶ Fullscreen</button>
 
-    <!-- Load JSON data and JavaScript -->
-    <script src="data.json"></script>
+    <!-- Load external JavaScript files -->
+    <script src="data.json" type="application/json"></script>
     <script src="script.js"></script>
 </body>
 </html>
