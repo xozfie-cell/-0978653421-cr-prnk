@@ -1,54 +1,27 @@
 {
-    "glitchTexts": [
-        "SYSTEM BREACH DETECTED",
-        "DATA EXFILTRATION IN PROGRESS",
-        "CRITICAL THREAT LEVEL",
-        "SECURITY PROTOCOLS FAILED",
-        "EMERGENCY LOCKDOWN ACTIVE",
-        "MALWARE EXECUTION CONFIRMED",
-        "DATA CORRUPTION IMMINENT",
-        "SECURITY BREACH: LEVEL 5"
-    ],
-    "terminalLines": [
-        "Analyzing memory usage... <span class='percentage'>87%</span>",
-        "Checking firewall status... <span class='error'>BYPASSED</span>",
-        "Detecting intrusion vector... <span class='warning'>PHISHING ATTACK</span>",
-        "Scanning for keyloggers... <span class='error'>3 DETECTED</span>",
-        "Verifying system integrity... <span class='error'>FAILED</span>",
-        "Checking for data breaches... <span class='warning'>MULTIPLE DETECTED</span>",
-        "Attempting to restore backup... <span class='error'>BACKUP CORRUPTED</span>",
-        "Sending distress signal... <span class='warning'>NO RESPONSE</span>",
-        "Analyzing CPU load... <span class='percentage'>94%</span>",
-        "Checking registry entries... <span class='error'>UNAUTHORIZED MODIFICATIONS</span>",
-        "Scanning for ransomware... <span class='warning'>DETECTED: Trojan.Cryptolocker</span>",
-        "Verifying boot sector... <span class='error'>COMPROMISED</span>"
-    ],
-    "fileItems": [
-        "passwords.txt - ACCESSED",
-        "bank_details.xlsx - ENCRYPTING",
-        "personal_photos/ - SCANNING",
-        "tax_return_2023.pdf - UPLOADING",
-        "emails_backup.db - EXFILTRATING",
-        "browser_history.log - ANALYZING",
-        "system_backup.zip - CORRUPTED",
-        "encryption_keys.dat - STOLEN",
-        "credit_card_info.csv - EXTRACTING",
-        "private_documents/ - INDEXING",
-        "cookies.bin - DECRYPTING",
-        "ssh_keys/ - COMPROMISED"
-    ],
-    "systemPopup": {
-        "title": "SYSTEM ALERT",
-        "message": "The system has detected unusual activity. If this is not you, secure your device immediately!",
-        "threatLevel": "CRITICAL",
-        "buttonText": "Next",
-        "lockMessage": "System lockdown active - 8 seconds remaining"
-    },
-    "prankMessage": {
-        "title": "You've been pranked! 👊",
-        "message1": "This was a simulated malware attack. No files were accessed, modified, or stolen.",
-        "message2": "Your device is completely safe. This was just a harmless prank to remind you about cybersecurity awareness.",
-        "buttonText": "Close Simulation",
-        "tip": "Remember to always keep your antivirus updated and be cautious of suspicious links!"
-    }
+  "simulation": {
+    "name": "Harmless Malware Prank",
+    "version": "2.0",
+    "description": "A safe and harmless malware simulation for educational purposes",
+    "duration": 10,
+    "creator": "Security Prank Team",
+    "disclaimer": "This simulation does not harm or modify any files on your device. It is completely safe and for entertainment/educational purposes only."
+  },
+  "messages": {
+    "system_alert": "The system has detected unusual activity. If this is not you, secure your device immediately!",
+    "prank_reveal": "You've been pranked! This was a simulated malware attack. No files were accessed, modified, or stolen.",
+    "safety_tips": [
+      "Always keep your antivirus software updated",
+      "Be cautious of suspicious links and email attachments",
+      "Use strong, unique passwords for different accounts",
+      "Enable two-factor authentication when available",
+      "Regularly back up your important files"
+    ]
+  },
+  "effects": {
+    "audio": true,
+    "visual": true,
+    "interaction_block": true,
+    "fullscreen": true
+  }
 }
