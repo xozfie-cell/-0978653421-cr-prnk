@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isFullscreen) {
                 toggleFullscreen();
             }
-        }, 500);
+        }, 300);
         
         // Show fullscreen button
         fullscreenBtn.style.display = 'block';
@@ -356,10 +356,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <li>Use antivirus software</li>
                 <li>Enable two-factor authentication</li>
             </ul>
-            <p>Closing in <span id="close-timer">3</span> seconds...</p>
+            <p>Closing in <span id="close-timer">10</span> seconds...</p>
         `;
         
-        let closeTimer = 3;
+        let closeTimer = 10;
         const closeCountdown = setInterval(() => {
             closeTimer--;
             document.getElementById('close-timer').textContent = closeTimer;
