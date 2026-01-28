@@ -1,52 +1,96 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SECURITY ALERT</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Security Alert</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚠️</text></svg>">
 </head>
 <body>
+    <!-- Scanlines effect -->
+    <div class="scanlines"></div>
+    
+    <!-- Glitch effect -->
+    <div class="glitch-container">
+        <div class="glitch-text" id="glitch-text">SYSTEM BREACH DETECTED</div>
+    </div>
+    
+    <!-- Terminal output -->
+    <div class="terminal">
+        <div class="terminal-line">Initializing system scan...</div>
+        <div class="terminal-line warning">WARNING: Unauthorized access detected</div>
+        <div class="terminal-line error">CRITICAL: Malicious process running</div>
+        <div class="terminal-line file-access">Accessing system files...</div>
+        <div class="terminal-line error">ERROR: Cannot terminate process PID:7843</div>
+        <div class="terminal-line">Scanning network connections...</div>
+        <div class="terminal-line warning">WARNING: Data exfiltration in progress</div>
+        <div class="terminal-line">Encrypting system logs...</div>
+        <div class="terminal-line error">FAILED: Encryption module corrupted</div>
+        <div class="terminal-line">Accessing user data...</div>
+        <div class="terminal-line file-access">Location: C:/Users/Admin/Documents/</div>
+        <div class="terminal-line file-access">Location: C:/Users/Admin/Downloads/</div>
+        <div class="terminal-line file-access">Location: C:/Users/Admin/Desktop/</div>
+        <div class="terminal-line warning">WARNING: Multiple file modifications detected</div>
+        <div class="terminal-line">Attempting to block intrusion...</div>
+        <div class="terminal-line error">FAILED: Security protocols compromised</div>
+        <div class="terminal-line">Sending alert to administrator...</div>
+        <div class="terminal-line error">FAILED: Network connection unstable</div>
+        <div class="terminal-line">Initializing emergency protocols...</div>
+    </div>
+    
+    <!-- Files being "deleted" -->
+    <div class="files-list">
+        <div class="file-item">passwords.txt - ACCESSED</div>
+        <div class="file-item">bank_details.xlsx - ENCRYPTING</div>
+        <div class="file-item">personal_photos/ - SCANNING</div>
+        <div class="file-item">tax_return_2023.pdf - UPLOADING</div>
+        <div class="file-item">emails_backup.db - EXFILTRATING</div>
+        <div class="file-item">browser_history.log - ANALYZING</div>
+        <div class="file-item">system_backup.zip - CORRUPTED</div>
+        <div class="file-item">encryption_keys.dat - STOLEN</div>
+    </div>
+    
+    <!-- Warning symbol -->
+    <div class="warning-symbol" id="warning-symbol">⚠</div>
+    
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    
+    <!-- Countdown -->
+    <div class="countdown" id="countdown">8</div>
+    
+    <!-- Progress bar -->
+    <div class="progress-container" id="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    
+    <!-- System popup (appears after 2 seconds) -->
+    <div class="popup" id="system-popup">
+        <h2>SYSTEM ALERT</h2>
+        <p>The system has detected unusual activity. If this is not you, secure your device immediately!</p>
+        <p><strong>Threat Level: CRITICAL</strong></p>
+        <button id="next-button" disabled>Next</button>
+        <p style="font-size: 14px; margin-top: 15px; color: #ccc;">System lockdown active - 8 seconds remaining</p>
+    </div>
+    
+    <!-- Prank message (appears after 8 seconds) -->
+    <div class="prank-message" id="prank-message">
+        <h2>You've been pranked! 👊</h2>
+        <p>This was a simulated malware attack. No files were accessed, modified, or stolen.</p>
+        <p>Your device is completely safe. This was just a harmless prank to remind you about cybersecurity awareness.</p>
+        <button id="close-button">Close Simulation</button>
+        <p style="font-size: 14px; margin-top: 20px; color: #0a0;">Remember to always keep your antivirus updated and be cautious of suspicious links!</p>
+    </div>
+    
+    <!-- Block screen to prevent interaction -->
+    <div class="block-screen" id="block-screen"></div>
+    
+    <!-- Audio element for keygen sound -->
+    <audio id="keygen-audio" loop></audio>
 
-<div id="tap">
-  <div class="tap-box">
-    <h1>⚠ SYSTEM WARNING</h1>
-    <p>Tap to continue</p>
-  </div>
-</div>
-
-  <!-- SYSTEM POPUP -->
-<div id="systemPopup" class="popup-overlay hidden">
-  <div class="system-popup glitch-box">
-    <h2>⚠ SECURITY NOTICE</h2>
-    <p>Sistem mendeteksi adanya aktifitas tak biasa</p>
-    <button id="popupBtn">Amankan device</button>
-  </div>
-</div>
-
-
-<div id="screen" class="hidden">
-  <div class="glitch">SYSTEM COMPROMISED</div>
-  <div id="terminal"></div>
-
-  <div class="status">
-    <span>Encrypting personal data...</span>
-    <span id="ip"></span>
-  </div>
-
-  <div class="progress-box">
-    <div id="bar"></div>
-  </div>
-</div>
-
-<div id="prank" class="hidden">
-  <div class="popup">
-    <h1>Anda kena prank 🤪</h1>
-    <p>Tenang. Ini cuma prank visual.<br>Tidak ada data yang diambil.</p>
-  </div>
-</div>
-
-<script src="script.js"></script>
+    <!-- Load JSON data and JavaScript -->
+    <script src="data.json"></script>
+    <script src="script.js"></script>
 </body>
 </html>
